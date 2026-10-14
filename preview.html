@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#7f65aa">
+<title>개인 디자인 시스템 견본</title>
+<link rel="icon" href="assets/fig/study.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+/* 견본 페이지 전용 배치. 부품 모양은 모두 tokens.css */
+body { background: var(--bg-canvas); }
+.page { max-width: 1100px; }
+.sec { margin-top: 28px; }
+.sec > h2 { margin: 0 0 12px; font-size: 18px; font-weight: 700; }
+.sec > h2 small { margin-inline-start: 8px; font-size: 13px; font-weight: 400; color: var(--text-secondary); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.stack > * + * { margin-top: 12px; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.sw { border: 1px solid var(--border-2); border-radius: 8px; background: #fff; overflow: hidden; font-size: 12px; }
+.sw i { display: block; height: 44px; }
+.sw b { display: block; padding: 6px 8px 0; font-size: 13px; }
+.sw span { display: block; padding: 0 8px 6px; color: var(--text-secondary); font-family: var(--font-mono); }
+.sizes div { display: flex; align-items: baseline; gap: 12px; }
+.sizes small { width: 150px; flex: none; font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+.icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+.icons div { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border-2); border-radius: 8px; background: #fff; font-size: 12px; font-family: var(--font-mono); }
+.figs { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; }
+.figs figure { margin: 0; text-align: center; font-size: 12px; color: var(--text-secondary); }
+.figs img { display: block; margin: 0 auto 6px; }
+.demo-gnb { position: static; height: 48px; margin-bottom: 12px; border: 1px solid var(--border-2); border-radius: 8px; box-shadow: none; }
+.toc { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; }
+.toc a { color: var(--text-brand); text-decoration: none; }
+.site-foot { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--border-2); font-size: 13px; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+<!-- 개인 사이트 아이콘 심볼 모음 (2026-10-13). 규칙은 design-system.md 8절.
+     i-*  : 메뉴·링크·단추용 선형 아이콘 (Feather(MIT)·Lucide(ISC) 계열, 24 격자). 색·굵기는 쓰는 쪽 .ic 가 정함(currentColor).
+     m-*  : 사이트 표식 (손그림 세트 화풍, 100 격자, 선은 화면 px 고정). 상단 22px, 선 색은 쓰는 쪽 color(상단은 먹선 토큰 ink).
+     쓰는 법: 이 파일을 페이지에 그대로 인라인한 뒤 <svg class="ic"><use href="#i-home"/></svg>.
+     사이트마다 필요한 심볼만 복사해 둠. 고치면 거기도 같이 고침. -->
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+<symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 19.5 2 21l1.5-5.5L17 3z"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+<symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></symbol>
+<symbol id="i-skip-back" viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></symbol>
+<symbol id="i-skip-forward" viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></symbol>
+<symbol id="i-rewind" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></symbol>
+<symbol id="i-forward" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
+<symbol id="m-study" viewBox="0 0 100 100"><g transform="translate(2,2)"><rect x="30" y="40" width="40" height="46" rx="4" fill="#f7f3e8"/><path d="M30 44a4 4 0 0 1 4-4h5v46h-5a4 4 0 0 1-4-4z" fill="#e0b63d"/><path d="M13 62a37 37 0 0 1 74 0h-6a31 31 0 0 0-62 0z" fill="#4a4744"/><rect x="9" y="56" width="14" height="22" rx="5" fill="#4a4744"/><rect x="77" y="56" width="14" height="22" rx="5" fill="#4a4744"/></g><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="30" y="40" width="40" height="46" rx="4" vector-effect="non-scaling-stroke"/><path d="M39 40v46M47 54h14M47 62h9" vector-effect="non-scaling-stroke"/><path d="M13 62a37 37 0 0 1 74 0h-6a31 31 0 0 0-62 0z" vector-effect="non-scaling-stroke"/><rect x="9" y="56" width="14" height="22" rx="5" vector-effect="non-scaling-stroke"/><rect x="77" y="56" width="14" height="22" rx="5" vector-effect="non-scaling-stroke"/></g></symbol>
+</svg>
+<header class="gnb"><div class="gnb-inner">
+  <a class="gnb-logo" href="preview.html"><span class="mark" aria-hidden="true"><svg><use href="#m-study"/></svg></span><span class="t">디자인 시스템</span></a>
+  <nav class="gnb-menu" aria-label="사이트"><a class="on" href="preview.html" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg>부품 견본</a><a href="design-system.md"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg>규칙 문서</a></nav>
+  <div class="gnb-right"><a class="gnb-link gnb-ext" href="https://study-podcast-private.jaeseon314.workers.dev" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg>듣는 교재</a></div>
+</div></header>
+
+<main class="page">
+  <div class="page-head has-fig">
+    <img class="head-fig" src="assets/fig/study.svg" alt="" width="56" height="56">
+    <div class="title-row"><div class="title-left"><h1 class="page-title">개인 디자인 시스템 견본</h1></div>
+      <div class="button-box"><a class="btn btn--primary" href="design-system.md"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg>규칙 문서</a></div></div>
+    <p class="page-sub">사내 디자인 시스템 2026-10-07판을 개인용으로 고친 것. 주색 라벤더(파스텔 단추), 바탕 연노랑, 손그림 한 화풍, 회사 로고·캐릭터·제품 그림 없음. 이 머리글이 "머리글 + 그림 56px" 부품의 예.</p>
+    <p class="page-meta"><span>2026-10-13</span><span class="dot-sep" aria-hidden="true"></span><span>tokens.css · icons.svg · fig/</span></p>
+  </div>
+  <nav class="toc" aria-label="차례"><a href="#c3">3 색</a><a href="#c4">4 글자 크기</a><a href="#c6">6 부품</a><a href="#c8">8 아이콘·그림</a><a href="#c9">9 회사 것과 다른 점</a></nav>
+
+  <section class="sec" id="c3"><h2>3. 색<small>토큰 이름 · 값</small></h2>
+    <div class="swatches">
+      <div class="sw"><i style="background:#1f1f1f"></i><b>글자</b><span>--text-primary #1f1f1f</span></div>
+      <div class="sw"><i style="background:#6f6a63"></i><b>보조 글자</b><span>--text-secondary #6f6a63</span></div>
+      <div class="sw"><i style="background:#aaa59d"></i><b>입력 안내</b><span>--text-placeholder #aaa59d</span></div>
+      <div class="sw"><i style="background:#7f65aa"></i><b>주색 라벤더 (글자·선택)</b><span>--brand #7f65aa</span></div>
+      <div class="sw"><i style="background:#d8d0e5"></i><b>주 단추·선택 필터 면</b><span>--brand-fill #d8d0e5</span></div>
+      <div class="sw"><i style="background:#5e4390"></i><b>파스텔 면 위 글자</b><span>--on-brand #5e4390</span></div>
+      <div class="sw"><i style="background:#e7e2ef"></i><b>주색 분류 칩 바탕</b><span>--bg-brand-soft #e7e2ef</span></div>
+      <div class="sw"><i style="background:#fbe4ec"></i><b>핑크 분류</b><span>--bg-pink / #a8386a</span></div>
+      <div class="sw"><i style="background:#f4e9c8"></i><b>노랑 분류</b><span>--bg-yellow / #6e5300</span></div>
+      <div class="sw"><i style="background:#2b2a28"></i><b>먹선</b><span>--ink #2b2a28</span></div>
+      <div class="sw"><i style="background:#ebf0d3"></i><b>연두 분류</b><span>--bg-green / #5a6c18</span></div>
+      <div class="sw"><i style="background:#e2eee3"></i><b>정상</b><span>--bg-success / #2f6b3a</span></div>
+      <div class="sw"><i style="background:#f8ecc6"></i><b>주의</b><span>--bg-caution / #7a5600</span></div>
+      <div class="sw"><i style="background:#f9dfcc"></i><b>경고</b><span>--bg-warning / #9a4a14</span></div>
+      <div class="sw"><i style="background:#f9e2de"></i><b>오류</b><span>--bg-error / #ad3328</span></div>
+      <div class="sw"><i style="background:#e3e9f1"></i><b>정보</b><span>--bg-info / #355c8d</span></div>
+      <div class="sw"><i style="background:#f1ebf6"></i><b>보라 분류</b><span>--bg-violet / #7a5e8c</span></div>
+      <div class="sw"><i style="background:#efede8"></i><b>기타</b><span>--bg-neutral / #5c5852</span></div>
+      <div class="sw"><i style="background:#fcfaef;border-bottom:1px solid var(--border-2)"></i><b>페이지 바탕 (연노랑)</b><span>--bg-canvas #fcfaef</span></div>
+      <div class="sw"><i style="background:#edebe6"></i><b>보조 단추·코드</b><span>--bg-sunken-2 #edebe6</span></div>
+      <div class="sw"><i style="background:#d6d2cb"></i><b>카드 테두리</b><span>--border-3 #d6d2cb</span></div>
+    </div>
+    <h3 class="sub-h">손그림 세트 색 (그림에만)</h3>
+    <div class="swatches">
+      <div class="sw"><i style="background:#f7f3e8"></i><b>크림</b><span>#f7f3e8 · #efe9d8</span></div>
+      <div class="sw"><i style="background:#e6e3dc"></i><b>따뜻한 회색</b><span>#e6e3dc · #d9d6cf</span></div>
+      <div class="sw"><i style="background:#4a4744"></i><b>진회색</b><span>#4a4744</span></div>
+      <div class="sw"><i style="background:#e0b63d"></i><b>머스터드</b><span>#e0b63d · #ecd27a · #c99e2c</span></div>
+      <div class="sw"><i style="background:#b9cb8e"></i><b>세이지</b><span>#b9cb8e</span></div>
+      <div class="sw"><i style="background:#8fa63c"></i><b>올리브</b><span>#8fa63c</span></div>
+      <div class="sw"><i style="background:#c9463a"></i><b>고추</b><span>#c9463a · #d9655a</span></div>
+      <div class="sw"><i style="background:#e9a68f"></i><b>복숭아</b><span>#e9a68f</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="c4"><h2>4. 글자 크기</h2>
+    <div class="panel sizes stack">
+      <div><small>24px 700</small><span style="font-size:24px;font-weight:700">페이지 제목</span></div>
+      <div><small>20px 700</small><span style="font-size:20px;font-weight:700">글 본문 큰 제목</span></div>
+      <div><small>19px 700</small><span style="font-size:19px;font-weight:700">그림 카드 이름</span></div>
+      <div><small>18px 700</small><span style="font-size:18px;font-weight:700">카드 제목</span></div>
+      <div><small>16px 700</small><span style="font-size:16px;font-weight:700">상단 사이트 이름 · 작은 제목</span></div>
+      <div><small>15px 400</small><span style="font-size:15px">본문. 걸으면서 듣는 공부용 음성 사이트의 편 목록과 대본.</span></div>
+      <div><small>14px 400</small><span style="font-size:14px;color:var(--text-secondary)">설명 · 작성 정보 · 표</span></div>
+      <div><small>13px 400</small><span style="font-size:13px;color:var(--text-secondary)">보조 설명 · 필터 칩</span></div>
+      <div><small>12px 700</small><span style="font-size:12px;font-weight:700">칩 · 배지</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="c6"><h2>6. 부품</h2>
+    <div class="stack">
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">상단 <span class="count">1</span></h3></div>
+        <p class="page-sub" style="margin:4px 0 12px">맨 위 고정 48px. 사이트 표식 22px + 이름 16px/700 + 가운데 메뉴(선택은 주색 700) + 오른쪽 링크. 아래는 같은 마크업을 고정 없이 둔 것.</p>
+        <div class="gnb demo-gnb"><div class="gnb-inner">
+          <span class="gnb-logo"><span class="mark" aria-hidden="true"><svg><use href="#m-study"/></svg></span><span class="t">듣는 교재</span></span>
+          <nav class="gnb-menu"><a class="on" href="#c6"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>홈</a><a href="#c6">금융 기초</a><a href="#c6">조리기능사</a><a href="#c6">혈당 기초</a></nav>
+          <span class="gnb-right"><span class="gnb-link"><svg class="ic" aria-hidden="true"><use href="#i-headphones"/></svg>이어 듣기</span></span>
+        </div></div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">탭 · 숫자 카드</h3></div>
+        <nav class="page-tabs" style="margin:12px 0 16px"><button class="on" type="button">전체 <span class="cnt">79</span></button><button type="button">음성 있음 <span class="cnt">28</span></button><button type="button">대본만 <span class="cnt">51</span></button></nav>
+        <div class="kpis">
+          <div class="kpi"><span class="k">시리즈</span><span class="v">4</span><span class="s">금융 · M&amp;A · 조리 · 혈당</span></div>
+          <div class="kpi"><span class="k">편</span><span class="v">79<small>편</small></span><span class="s">음성 28편</span></div>
+          <div class="kpi"><span class="k">총 길이</span><span class="v">7<small>시간</small> 36<small>분</small></span><span class="s">음성 있는 편</span></div>
+          <div class="kpi"><span class="k">8000자 초과 대본</span><span class="v err">7<small>편</small></span><span class="s">조리 04 05 07 10 11 14 17</span></div>
+        </div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">그림 카드 <span class="count">3</span></h3><span class="kind">첫 화면</span></div>
+        <p class="page-sub" style="margin:4px 0 12px">손그림 76px · 이름 19px · 영문 한 줄 11px · 설명 14px · 밑단 색 6px. 밑단 색은 손그림 세트 색에서 고름.</p>
+        <div class="fig-grid">
+          <a class="fig-card" href="#c6" style="--card-color:#e0b63d"><img src="assets/fig/finance.svg" alt="" width="76" height="76"><span class="name">금융·경제 기초</span><span class="en">FINANCE BASICS</span><span class="desc">경제, 회계, 재무, 금융시장, 산업분석 18편</span><span class="foot"></span></a>
+          <a class="fig-card" href="#c6" style="--card-color:#8fa63c"><img src="assets/fig/cooking.svg" alt="" width="76" height="76"><span class="name">양식조리기능사 필기</span><span class="en">COOKING EXAM</span><span class="desc">필기 요약본을 풀어 읽는 18편</span><span class="foot"></span></a>
+          <a class="fig-card" href="#c6" style="--card-color:#c9463a"><img src="assets/fig/glucose.svg" alt="" width="76" height="76"><span class="name">혈당 기초편·교재</span><span class="en">GLUCOSE BASICS</span><span class="desc">기초편 7장과 교재 1~18장, 27편</span><span class="foot"></span></a>
+        </div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">단추 · 칩 · 필터 칩</h3></div>
+        <div class="stack" style="margin-top:12px">
+          <div class="row"><button class="btn btn--primary" type="button"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>이어 듣기</button><button class="btn btn--secondary" type="button">대본 보기</button><button class="btn btn--danger" type="button">기록 지우기</button><button class="btn btn--secondary btn--sm" type="button">작은 단추</button><button class="btn btn--primary" type="button" disabled>비활성</button></div>
+          <div class="row"><span class="chip">기본</span><span class="chip ok">다 들음</span><span class="chip warn">주의</span><span class="chip alert">경고</span><span class="chip err">오류</span><span class="chip info">정보</span><span class="chip brand">주색 분류</span><span class="chip pink">핑크 분류</span><span class="chip yellow">노랑 분류</span><span class="chip green">연두 분류</span><span class="chip violet">보라 분류</span><span class="chip plain">해당 없음</span><span class="kind">성격 표시</span><span class="count">27</span></div>
+          <div class="row"><a class="filter-chip on" href="#c6">전체 <span class="n">27</span></a><a class="filter-chip" href="#c6">기초편 <span class="n">7</span></a><a class="filter-chip" href="#c6">교재 <span class="n">18</span></a><a class="filter-chip" href="#c6"><svg class="ic" aria-hidden="true"><use href="#i-headphones"/></svg>안 들은 편만</a><a class="filter-chip empty" href="#c6">용어 풀이 <span class="n">0</span></a></div>
+        </div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">입력칸 · 표 · 빈 목록 · 안내</h3></div>
+        <div class="stack" style="margin-top:12px">
+          <div class="row"><div class="field" style="width:320px"><label for="q">편 찾기</label><input class="input" id="q" placeholder="제목이나 대본 낱말"><p class="hint">낱말을 띄어 쓰면 모두 들어간 편만</p></div><input class="input input--sm" style="width:200px" placeholder="작은 입력칸 32px"></div>
+          <div class="table-scroll"><table class="grid"><thead><tr><th>번호</th><th>제목</th><th>묶음</th><th>길이</th><th>상태</th></tr></thead><tbody>
+            <tr><td>01</td><td>혈당 기초 1편. 혈당이란 무엇인가</td><td><span class="chip green">기초편</span></td><td>14:20</td><td><span class="chip ok">다 들음</span></td></tr>
+            <tr><td>02</td><td>혈당 기초 2편. 측정 원리</td><td><span class="chip green">기초편</span></td><td>16:02</td><td>8:10까지</td></tr>
+            <tr><td>08</td><td>교재 1장. 효소 전극</td><td><span class="chip brand">교재</span></td><td>대본만</td><td><span class="chip plain">음성 준비 중</span></td></tr>
+          </tbody></table></div>
+          <div class="tbl-empty">아직 올라온 편이 없습니다.</div>
+          <p class="note">재생 위치와 들은 기록은 이 브라우저에만 저장됨. 다른 기기에서는 이어지지 않음. <a href="#c6">자세히</a></p>
+        </div>
+      </div>
+
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">글 본문 (.md)</h3></div>
+        <div class="md" style="margin-top:12px"><h2>대본 보기</h2><p>대본은 <code>.md</code> 글 본문 부품으로 보여 줌. 한글은 낱말 단위로 줄을 바꾸고, <a href="#c6">링크</a>는 주색 밑줄.</p><ul><li>15px, 줄 간격 1.75</li><li>작은 제목 16px/700</li></ul><blockquote><p>기울임은 그림 설명·보충 설명으로 씀 <em>(13px 보조색)</em></p></blockquote></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="c8"><h2>8. 아이콘 · 그림</h2>
+    <div class="stack">
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">손그림 세트</h3><span class="kind">한 화풍</span></div>
+        <p class="page-sub" style="margin:4px 0 16px">먹선 1.2px, 색 면은 선과 2px 어긋남. 표식만 22px 에서도 선이 보이게 화면 px 고정.</p>
+        <div class="figs">
+          <figure><img src="assets/fig/study.svg" width="22" height="22" alt="">표식 22</figure>
+          <figure><img src="assets/fig/study.svg" width="56" height="56" alt="">머리글 56</figure>
+          <figure><img src="assets/fig/study.svg" width="76" height="76" alt="">카드 76</figure>
+          <figure><img src="assets/fig/study.svg" width="96" height="96" alt="">삽화 96</figure>
+          <figure><img src="assets/fig/finance.svg" width="96" height="96" alt="">finance</figure>
+          <figure><img src="assets/fig/cooking.svg" width="96" height="96" alt="">cooking</figure>
+          <figure><img src="assets/fig/glucose.svg" width="96" height="96" alt="">glucose</figure>
+          <figure><img src="assets/fig/finance.svg" width="56" height="56" alt="">56</figure>
+          <figure><img src="assets/fig/cooking.svg" width="56" height="56" alt="">56</figure>
+          <figure><img src="assets/fig/glucose.svg" width="56" height="56" alt="">56</figure>
+        </div>
+      </div>
+      <div class="panel"><div class="panel-head"><h3 class="panel-title">선형 아이콘 (16px, 굵기 2)</h3></div>
+        <div class="icons" style="margin-top:12px" id="iconList"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="c9"><h2>9. 회사 것과 다른 점</h2>
+    <div class="table-scroll"><table class="grid"><thead><tr><th>항목</th><th>회사</th><th>개인</th></tr></thead><tbody>
+      <tr><td>주색</td><td>남색 #003894</td><td>라벤더 #7f65aa (글자·선택), 주 단추는 파스텔 면 #d8d0e5 + 진한 글자</td></tr>
+      <tr><td>페이지 바탕</td><td>베이지 #f6f5f1</td><td>연노랑 #fcfaef</td></tr>
+      <tr><td>로고 점</td><td>연두 #81bf24, 그림마다 점 하나</td><td>없음</td></tr>
+      <tr><td>그림 화풍</td><td>손그림 + 정돈된 선 두 가지</td><td>손그림 한 가지</td></tr>
+      <tr><td>로고·캐릭터·제품 그림</td><td>있음</td><td>없음</td></tr>
+      <tr><td>분류 칩</td><td>남색·연두·보라·청록·회색</td><td>라벤더·핑크·노랑·보라·연두·회색</td></tr>
+      <tr><td>그림 카드</td><td>홈 사이트 CSS</td><td>tokens.css 공용 부품 .fig-card</td></tr>
+    </tbody></table></div>
+  </section>
+  <p class="site-foot">개인 디자인 시스템 · <span class="ltr">2026-10-13</span> · 규칙은 design-system.md</p>
+</main>
+<script>
+(function () {
+  var box = document.getElementById('iconList');
+  document.querySelectorAll('symbol[id^="i-"]').forEach(function (s) {
+    var d = document.createElement('div');
+    d.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#' + s.id + '"/></svg>' + s.id;
+    box.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>
